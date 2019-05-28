@@ -1,4 +1,4 @@
-# Original project : sabyasachibiswal https://github.com/sabyasachibiswal/angular5-social-login
+# Original project : high54 https://github.com/high54/angular-6-social-login
 
 
 Social login api for Angular 6. Includes Facebook, Google login and Linkedin. 
