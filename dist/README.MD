@@ -1,5 +1,6 @@
+This is a fork of
 # Original project : high54 https://github.com/high54/angular-6-social-login
-
+Updated dependencies for angular 6, adding all google scopes and also return expiration time of the google token
 
 Social login api for Angular 6. Includes Facebook, Google login and Linkedin. 
 
