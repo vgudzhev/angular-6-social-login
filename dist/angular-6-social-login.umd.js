@@ -215,7 +215,7 @@ var GoogleLoginProvider = (function (_super) {
                 gapi.load('auth2', function () {
                     _this.auth2 = gapi.auth2.init({
                         client_id: _this.clientId,
-                        scope : 'email profile openid https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.readonly https://mail.google.com/ https://www.googleapis.com/auth/gmail.compose https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.readonly'
+                        scope : 'email profile openid https://www.googleapis.com/auth/gmail.send https://mail.google.com/ https://www.googleapis.com/auth/gmail.compose' 
                     });
                     _this.auth2.then(function () {
                         if (_this.auth2.isSignedIn.get()) {
