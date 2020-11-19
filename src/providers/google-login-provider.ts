@@ -53,7 +53,9 @@ export class GoogleLoginProvider extends BaseLoginProvider {
 
     signIn(): Promise<SocialUser> {
         return new Promise((resolve, reject) => {
-            let promise = this.auth2.grantOfflineAccess();
+            let promise = this.auth2.grantOfflineAccess({
+                prompt: 'select_account'
+            });
             promise.then((resp) => {
                 resolve(this.drawUser(resp.code));
             });
