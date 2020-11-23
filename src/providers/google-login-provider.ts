@@ -22,12 +22,14 @@ export class GoogleLoginProvider extends BaseLoginProvider {
                 gapi.load('auth2', () => {
                     this.auth2 = gapi.auth2.init({
                         client_id: this.clientId,
-                        scope : 'email profile openid https://www.googleapis.com/auth/gmail.send'
+                        scope: 'email profile openid https://www.googleapis.com/auth/gmail.send'
                     });
 
                     this.auth2.then(() => {
                         if (this.auth2.isSignedIn.get()) {
-                            resolve(this.drawUser());
+                            this.auth2.currentUser.get().reloadAuthResponse().then(authResponse => {
+                                resolve(this.drawUser(null, authResponse));
+                            });
                         }
                     });
                 });
@@ -35,10 +37,10 @@ export class GoogleLoginProvider extends BaseLoginProvider {
         });
     }
 
-    drawUser(googleAuthCode?: string): SocialUser {
+    drawUser(googleAuthCode?: string, authResponse?: any): SocialUser {
         let user: SocialUser = new SocialUser();
         let profile = this.auth2.currentUser.get().getBasicProfile();
-        let authResponseObj = this.auth2.currentUser.get().getAuthResponse(true);
+        let authResponseObj = authResponse ? authResponse : this.auth2.currentUser.get().getAuthResponse(true);
         user.id = profile.getId();
         user.name = profile.getName();
         user.email = profile.getEmail();
@@ -57,7 +59,9 @@ export class GoogleLoginProvider extends BaseLoginProvider {
                 prompt: 'select_account'
             });
             promise.then((resp) => {
-                resolve(this.drawUser(resp.code));
+                this.auth2.currentUser.get().reloadAuthResponse().then(authResponse => {
+                    resolve(this.drawUser(resp.code, authResponse));
+                });
             });
         });
     }
